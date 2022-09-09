@@ -1,0 +1,58 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Public Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.title{
+  font-family: 'Combo', cursive;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.cart {
+  color: black;
+}
+.cart:hover {
+  transform: scale(1.2);
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+}
+
+.link-home{
+  text-decoration: none;
+  color: black;
+}
+
+.link-home:hover .rotate{
+  color: black;
+  transform: rotate(45deg);
+  transition: all 0.50s ease-in-out;
+}
+
+.home-bg{
+  background-image: url("./images/home-bg.jpg");
+    /* Full height */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.custom{
+  margin-bottom:10px;
+}
+
+li.no-bullet {
+  list-style-type: none;
+
+}
+.card:hover{
+  transform: scale(1.1);
+  box-shadow: 5px 5px 5px #8BD4F1;
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+}
