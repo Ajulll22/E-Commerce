@@ -1,52 +1,68 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import Col from 'react-bootstrap/esm/Col'
 import Container from 'react-bootstrap/esm/Container'
 import Row from 'react-bootstrap/Row'
-import { FiArrowUpRight, FiPlusCircle } from 'react-icons/fi'
-import Card from 'react-bootstrap/Card';
-import test from '../images/test.png'
+import { useSearchParams } from 'react-router-dom'
+import ListCategory from '../components/ListCategory'
+import ListProduct from '../components/ListProduct'
+import { API_URL } from '../utils/Api'
 
 const Shop = () => {
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [categoryQuery, setCategoryQuery] = useSearchParams();
+    const [categorySelect, setCategorySelect] = useState(categoryQuery.get('id_category') || '')
+    const [namaCategory, setNamaCategory] = useState('')
+
+    useEffect(() => {
+        getProducts()
+        getCategories()
+    }, [])
+
+    useEffect(() => {
+        getProducts()
+    }, [categorySelect])
+
+
+    const onCategorySelect = (id_category, nama_category) => {
+        setCategorySelect(id_category)
+        setNamaCategory(nama_category)
+        setCategoryQuery({ id_category })
+    }
+
+    const getProducts = async () => {
+        const response = await axios.get(API_URL + "products?id_category=" + categorySelect)
+        setProducts(response.data.result)
+    }
+
+    const getCategories = async () => {
+        const response = await axios.get(API_URL + "categories")
+        setCategories(response.data)
+    }
+
+
     return (
-        <body>
-            <div class="px-4 pt-5 my-5 text-center border-top">
-                <h5 class="title display-4 fw-bold">Gaming Gear</h5>
+        <div>
+            <div className="px-4 pt-5 my-5 text-center border-top">
+                <h5 className="title display-4 fw-bold">Gaming {namaCategory || 'Gear'}</h5>
             </div>
             <hr />
             <hr />
             <Container fluid>
                 <Row>
-                    <Col className='bg-light mx-2' md={3}>
-                        <h4 className='mt-3'><strong>Daftar Kategori</strong></h4>
-                        <hr />
-                        <ul class="list-group mb-3">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <h4>A list item</h4>
-                                <FiArrowUpRight size={35} />
-                            </li>
-                        </ul>
-                    </Col>
+                    <ListCategory categorySelect={categorySelect} onCategorySelect={onCategorySelect} categories={categories} />
                     <Col className='mx-2 my-auto'>
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={test} />
-                            <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
-                                <Card.Text>
-                                    Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.
-                                </Card.Text>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <FiPlusCircle size={40} />
-
-                                    <h5 style={{ color: "#53ADD1" }} >Rp. 130.000,00</h5>
-                                </div>
-                            </Card.Body>
-                        </Card>
+                        <Row className='overflow-auto'>
+                            {products && products.map((product) => (
+                                <ListProduct key={product.id_product} product={product} />
+                            ))}
+                        </Row>
                     </Col>
                 </Row>
             </Container>
 
-        </body>
+        </div>
     )
 }
 
