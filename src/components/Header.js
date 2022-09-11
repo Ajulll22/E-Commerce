@@ -6,8 +6,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { Link, useLocation } from "react-router-dom";
+
 
 function Header() {
+  let location = useLocation()
+
   return (
     <>
       <Navbar variant='light' expand="lg">
@@ -15,8 +19,8 @@ function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
+              <Link className={'nav-link ' + (location.pathname === '/' && 'disabled')} to={"/"}> Home </Link>
+              <Link className={'nav-link ' + (location.pathname === '/shop' && 'disabled')} to={"/shop"}> Shop </Link>
 
             </Nav>
           </Navbar.Collapse>
@@ -49,7 +53,7 @@ function Header() {
           </Col>
           <Col>
             <div className="text-center">
-              <AiOutlineShoppingCart className="cart" onM size={60} />
+              <AiOutlineShoppingCart className="cart" size={60} />
             </div></Col>
         </Container>
       </Navbar>
