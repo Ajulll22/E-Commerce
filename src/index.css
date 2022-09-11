@@ -51,8 +51,28 @@ li.no-bullet {
 
 }
 .card:hover{
-  transform: scale(1.1);
   box-shadow: 5px 5px 5px #8BD4F1;
   transition: all 0.25s ease-in-out;
   cursor: pointer;
 }
+
+.link-nav{
+  text-decoration: none;
+  color: black;
+}
+
+.list-category:hover {
+  cursor: pointer;
+  background-color: #8BD4F1;
+}
+
+
+.list-category:hover .rotate{
+  transform: rotate(45deg);
+  transition: all 0.50s ease-in-out;
+}
+
+.category-select{
+  transform: rotate(45deg);
+}
+
