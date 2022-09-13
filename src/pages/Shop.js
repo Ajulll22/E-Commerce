@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/esm/Col'
 import Container from 'react-bootstrap/esm/Container'
 import Row from 'react-bootstrap/Row'
 import { useSearchParams } from 'react-router-dom'
+import Header from '../components/Header'
 import ListCategory from '../components/ListCategory'
 import ListProduct from '../components/ListProduct'
 import { API_URL } from '../utils/Api'
@@ -44,6 +45,7 @@ const Shop = () => {
 
     return (
         <div>
+            <Header />
             <div className="px-4 pt-5 my-5 text-center border-top">
                 <h5 className="title display-4 fw-bold">Gaming {namaCategory || 'Gear'}</h5>
             </div>
