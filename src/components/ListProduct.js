@@ -9,7 +9,7 @@ const ListProduct = ({ product }) => {
 
     return (
         <Col md={4} xs={6} className="mb-3">
-            <Card>
+            <Card className='card-product'>
                 <Card.Img variant="top" src={product.url_product} />
                 <Card.Body>
                     <Card.Title>{product.nama_product}</Card.Title>
