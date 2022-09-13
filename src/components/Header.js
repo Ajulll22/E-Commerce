@@ -6,11 +6,23 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useContext, useState } from 'react';
+import AuthContext from './AuthContext';
 
 
 function Header() {
   let location = useLocation()
+  let navigate = useNavigate();
+  const [query] = useSearchParams();
+  const [search, setSearch] = useState(query.get('keyword') || '')
+
+  const { user, auth } = useContext(AuthContext)
+
+  const onSearch = (event) => {
+    event.preventDefault();
+    navigate('/search?keyword=' + search)
+  }
 
   return (
     <>
@@ -25,9 +37,20 @@ function Header() {
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-              Signed in as: <a href="#login">Mark Otto</a>
-            </Navbar.Text>
+            <Nav>
+              {auth ?
+                <Navbar.Text>
+                  Signed in as: {user.nama_user}
+                </Navbar.Text>
+                :
+                <>
+                  <Link className={'nav-link ' + (location.pathname === '/login' && 'disabled')} to={"/login"}><strong> Log In </strong></Link>
+                  <Link className={'nav-link ' + (location.pathname === '/shop' && 'disabled')} to={"/shop"}><strong> Register </strong></Link>
+                </>
+              }
+
+
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
@@ -37,15 +60,19 @@ function Header() {
           <Col>
           </Col>
           <Col md="8">
-            <Form className="d-flex">
+            <Form onSubmit={onSearch} className="d-flex">
               <InputGroup>
                 <Form.Control
+                  required
                   type="search"
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)
+                  }
                 />
-                <Button variant="light" id="button-addon2">
+                <Button type='submit' variant="light" id="button-addon2">
                   Search
                 </Button>
               </InputGroup>
