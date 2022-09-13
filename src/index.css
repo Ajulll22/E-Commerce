@@ -50,7 +50,7 @@ li.no-bullet {
   list-style-type: none;
 
 }
-.card:hover{
+.card-product:hover{
   box-shadow: 5px 5px 5px #8BD4F1;
   transition: all 0.25s ease-in-out;
   cursor: pointer;
