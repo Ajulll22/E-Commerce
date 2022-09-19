@@ -8,6 +8,9 @@ import Header from '../components/Header'
 import ListCategory from '../components/ListCategory'
 import ListProduct from '../components/ListProduct'
 import { API_URL } from '../utils/Api'
+import Image from 'react-bootstrap/Image'
+import no_data from '../images/not-found.svg'
+
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -56,9 +59,15 @@ const Shop = () => {
                     <ListCategory categorySelect={categorySelect} onCategorySelect={onCategorySelect} categories={categories} />
                     <Col className='mx-2 my-auto'>
                         <Row className='overflow-auto'>
-                            {products && products.map((product) => (
-                                <ListProduct key={product.id_product} product={product} />
-                            ))}
+                            {products.length ?
+                                products && products.map((product) => (
+                                    <ListProduct key={product.id_product} product={product} />
+                                ))
+                                : <div className='text-center mt-3'>
+                                    <Image width={'50%'} height={'50%'} src={no_data} />
+                                    <h2>Data Not Found</h2>
+                                </div>
+                            }
                         </Row>
                     </Col>
                 </Row>
