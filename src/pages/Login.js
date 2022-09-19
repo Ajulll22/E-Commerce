@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
     MDBContainer,
     MDBCard,
@@ -13,21 +13,35 @@ import {
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { API_URL } from '../utils/Api';
+import { useNavigate } from 'react-router-dom';
+import ErrorLogin from '../components/ErrorLogin';
+import AuthContext from '../components/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('');
+    const [show, setShow] = useState(true);
+    let navigate = useNavigate();
+    const { setAuth } = useContext(AuthContext)
 
     const onLogin = async (e) => {
-        e.preventDefault();
-        const data = {
-            'email_user': email,
-            'password_user': password
+        try {
+            e.preventDefault();
+            const data = {
+                'email_user': email,
+                'password_user': password
+            }
+            const response = await axios.post(API_URL + 'auth/login', data, {
+                withCredentials: true
+            })
+            setAuth(true)
+            navigate("/")
+        } catch (error) {
+            console.log(error.response.data)
+            setError(error.response.data.message)
+            setShow(true)
         }
-        const response = await axios.post(API_URL + 'auth/login', data, {
-            withCredentials: true
-        })
-        console.log(response);
 
     }
 
@@ -50,14 +64,21 @@ const Login = () => {
                             </div>
 
                             <h5 className="fw-normal my-4 pb-3" style={{ letterSpacing: '1px' }}>Sign into your account</h5>
+                            {
+                                error ?
+                                    <ErrorLogin error={error} show={show} setShow={setShow} />
+                                    : null
+                            }
+
                             <Form onSubmit={onLogin}>
 
-                                <MDBInput value={email} onChange={(e) => setEmail(e.target.value)} wrapperClass='mb-4' label='Email address' type='email' size="lg" />
-                                <MDBInput value={password} onChange={(e) => setPassword(e.target.value)} wrapperClass='mb-4' label='Password' type='password' size="lg" />
+                                <MDBInput value={email} onChange={(e) => setEmail(e.target.value)} wrapperClass='mb-4' label='Email address' type='email' size="lg" required />
+                                <MDBInput value={password} onChange={(e) => setPassword(e.target.value)} wrapperClass='mb-4' label='Password' type='password' size="lg" required />
                                 <div className="d-grid gap-2">
                                     <Button className='mb-4 px-5' type='submit' variant="outline-secondary" size='lg'>Login</Button>
                                 </div>
                             </Form>
+
 
                             <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>Don't have an account? <a href="#!" style={{ color: '#393f81' }}>Register here</a></p>
 
