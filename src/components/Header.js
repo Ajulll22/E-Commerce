@@ -9,20 +9,26 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useContext, useState } from 'react';
 import AuthContext from './AuthContext';
+import { NavDropdown } from 'react-bootstrap';
 
 
-function Header() {
+function Header({ setKeyword }) {
   let location = useLocation()
   let navigate = useNavigate();
   const [query] = useSearchParams();
   const [search, setSearch] = useState(query.get('keyword') || '')
 
-  const { user, auth } = useContext(AuthContext)
+  const { user, auth, onLogout } = useContext(AuthContext)
 
   const onSearch = (event) => {
     event.preventDefault();
+    if (setKeyword) {
+      setKeyword(search)
+    }
+
     navigate('/search?keyword=' + search)
   }
+
 
   return (
     <>
@@ -39,9 +45,15 @@ function Header() {
           <Navbar.Collapse className="justify-content-end">
             <Nav>
               {auth ?
-                <Navbar.Text>
-                  Signed in as: {user.nama_user}
-                </Navbar.Text>
+                <>
+                  <Navbar.Text>
+                    Signed in as:</Navbar.Text>
+                  <NavDropdown align="end" title={user.nama_user} id="basic-nav-dropdown">
+                    <NavDropdown.Item onClick={onLogout} >Log Out</NavDropdown.Item>
+                  </NavDropdown>
+
+
+                </>
                 :
                 <>
                   <Link className={'nav-link ' + (location.pathname === '/login' && 'disabled')} to={"/login"}><strong> Log In </strong></Link>
@@ -80,7 +92,9 @@ function Header() {
           </Col>
           <Col>
             <div className="text-center">
-              <AiOutlineShoppingCart className="cart" size={60} />
+              <Link to={"/cart"}>
+                <AiOutlineShoppingCart className="cart" size={60} />
+              </Link>
             </div></Col>
         </Container>
       </Navbar>
