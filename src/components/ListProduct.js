@@ -15,7 +15,7 @@ const ListProduct = ({ product }) => {
                     <Card.Title>{product.nama_product}</Card.Title>
 
                     <div className="d-flex justify-content-between align-items-center">
-                        <FiPlusCircle size={40} />
+                        <FiPlusCircle className='add-to-cart' size={40} />
 
                         <h5 style={{ color: "#53ADD1" }} >Rp. {numberWithCommas(product.harga_product)}</h5>
                     </div>
