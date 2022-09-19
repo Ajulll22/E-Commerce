@@ -5,28 +5,50 @@ import AuthContext from "./AuthContext";
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({})
-    const [auth, setAuth] = useState(false)
+    const [auth, setAuth] = useState(true)
+
+    useEffect(() => {
+        getUserLogin()
+    }, [])
 
     useEffect(() => {
         getUserLogin()
     }, [auth])
 
     const getUserLogin = async () => {
-        const response = await axios.get(API_URL + "auth/user", {
-            withCredentials: true
-        })
-        console.log(response);
-        if (response.status === 200) {
+        try {
+            const response = await axios.get(API_URL + "auth/user", {
+                withCredentials: true
+            })
+            console.log(response);
+
             setUser(response.data)
             setAuth(true)
-        } else {
+
+        } catch (error) {
+            setAuth(false)
+        }
+    }
+
+    const onLogout = async () => {
+        try {
+            const response = await axios.get(API_URL + "auth/logout", {
+                withCredentials: true
+            })
+
+            setAuth(false)
+
+        } catch (error) {
+            console.log(error.response.data);
             setAuth(false)
         }
     }
 
     const value = {
         user,
-        auth
+        auth,
+        setAuth,
+        onLogout
     };
 
     return (
