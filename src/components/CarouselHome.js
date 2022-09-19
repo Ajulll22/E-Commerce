@@ -13,8 +13,9 @@ const CarouselHome = () => {
                     <h3 className="text-dark">
                         Belanja Alat Gaming dan <br /> Kebutuhan Komputer Lainnya
                     </h3>
+                    <br />
 
-                    <h3 className="link-home .text-dark">
+                    <h4 className="link-home .text-dark">
                         <Link
                             className="mt-4"
                             style={{ textDecoration: "none", color: "black" }}
@@ -22,7 +23,7 @@ const CarouselHome = () => {
                         >
                             Belanja Sekarang <FiArrowUpRight className="rotate" />
                         </Link>
-                    </h3>
+                    </h4>
                 </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
