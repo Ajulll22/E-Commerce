@@ -5,6 +5,9 @@ body, html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body::-webkit-scrollbar{
+  display: none;
+}
 .title{
   font-family: 'Combo', cursive;
 }
@@ -25,6 +28,9 @@ code {
 
 .add-to-cart:hover{
   color: #8BD4F1;
+  transform: scale(1.1);
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
 }
 
 .link-home{
@@ -83,3 +89,12 @@ li.no-bullet {
   background-color: white;
 }
 
+.product-col {
+  flex: 0 0 33.3333333%;
+  max-width: 33.3333333%;
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  display: flex;
+}
