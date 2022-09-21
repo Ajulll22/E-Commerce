@@ -6,7 +6,6 @@ import AuthContext from "./AuthContext";
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({})
     const [auth, setAuth] = useState(true)
-
     useEffect(() => {
         getUserLogin()
     }, [])
@@ -20,19 +19,18 @@ const AuthProvider = ({ children }) => {
             const response = await axios.get(API_URL + "auth/user", {
                 withCredentials: true
             })
-            console.log(response);
-
             setUser(response.data)
             setAuth(true)
 
         } catch (error) {
+            setUser({})
             setAuth(false)
         }
     }
 
     const onLogout = async () => {
         try {
-            const response = await axios.get(API_URL + "auth/logout", {
+            axios.get(API_URL + "auth/logout", {
                 withCredentials: true
             })
 
