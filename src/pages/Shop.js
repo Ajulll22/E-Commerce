@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Col from 'react-bootstrap/esm/Col'
 import Container from 'react-bootstrap/esm/Container'
 import Row from 'react-bootstrap/Row'
@@ -10,6 +10,9 @@ import ListProduct from '../components/ListProduct'
 import { API_URL } from '../utils/Api'
 import Image from 'react-bootstrap/Image'
 import no_data from '../images/not-found.svg'
+import { Button } from 'react-bootstrap'
+import { AiOutlinePlusSquare } from 'react-icons/ai'
+import AuthContext from '../components/AuthContext'
 
 
 const Shop = () => {
@@ -18,6 +21,7 @@ const Shop = () => {
     const [categoryQuery, setCategoryQuery] = useSearchParams();
     const [categorySelect, setCategorySelect] = useState(categoryQuery.get('id_category') || '')
     const [namaCategory, setNamaCategory] = useState('')
+    const { user } = useContext(AuthContext)
 
     useEffect(() => {
         getProducts()
@@ -52,15 +56,20 @@ const Shop = () => {
             <div className="px-4 pt-5 my-5 text-center border-top">
                 <h5 className="title display-4 fw-bold">Gaming {namaCategory || 'Gear'}</h5>
             </div>
-            <hr />
-            <hr />
+
             <Container fluid>
+                <hr />
+                <div className='text-end'>
+                    {user.level_user === 2 && <Button variant='secondary'><AiOutlinePlusSquare style={{ "vertical-align": "bottom" }} size={30} /> Add Product</Button>}
+
+                </div>
+                <hr />
                 <Row>
                     <ListCategory categorySelect={categorySelect} onCategorySelect={onCategorySelect} categories={categories} />
                     <Col className='mx-2 my-auto'>
-                        <Row className='overflow-auto'>
+                        <Row>
                             {products.length ?
-                                products && products.map((product) => (
+                                products.map((product) => (
                                     <ListProduct key={product.id_product} product={product} />
                                 ))
                                 : <div className='text-center mt-3'>
