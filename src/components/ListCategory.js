@@ -4,7 +4,7 @@ import { FiArrowUpRight } from 'react-icons/fi'
 
 const ListCategory = ({ categories, onCategorySelect, categorySelect }) => {
     return (
-        <Col className='bg-light mx-2' md={3}>
+        <Col className='bg-light mx-2' lg={3}>
             <h4 className='mt-3'><strong>Daftar Kategori</strong></h4>
             <hr />
             <ul className="list-group mb-3">
