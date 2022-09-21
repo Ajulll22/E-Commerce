@@ -32,13 +32,12 @@ const Login = () => {
                 'email_user': email,
                 'password_user': password
             }
-            const response = await axios.post(API_URL + 'auth/login', data, {
+            await axios.post(API_URL + 'auth/login', data, {
                 withCredentials: true
             })
             setAuth(true)
             navigate("/")
         } catch (error) {
-            console.log(error.response.data)
             setError(error.response.data.message)
             setShow(true)
         }
