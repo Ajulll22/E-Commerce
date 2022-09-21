@@ -1,8 +1,14 @@
-import { MDBBtn, MDBCol, MDBInput, MDBTypography } from 'mdb-react-ui-kit'
+import { MDBCol, MDBInput, MDBTypography } from 'mdb-react-ui-kit'
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { numberWithCommas } from '../utils/CostFormat'
+import Address from './Address'
 
-const TransactionCart = () => {
+const TransactionCart = ({ carts }) => {
+    const total_trx = carts.reduce(function (result, item) {
+        return result + item.total_harga;
+    }, 0);
+
     return (
         <MDBCol lg="4" className="bg-grey">
             <div className="p-5">
@@ -12,18 +18,7 @@ const TransactionCart = () => {
 
                 <hr className="my-4" />
 
-                <div className="d-flex justify-content-between mb-4">
-                    <MDBTypography tag="h5" className="text-uppercase">
-                        items 3
-                    </MDBTypography>
-                    <MDBTypography tag="h5">€ 132.00</MDBTypography>
-                </div>
-
-                <MDBTypography tag="h5" className="text-uppercase mb-3">
-                    Address
-                </MDBTypography>
-
-                <p>Jalan Pulau Damar Gg. Madrasah 7, Tanjung Senang</p>
+                <Address />
 
                 <MDBTypography tag="h5" className="text-uppercase mb-3">
                     Give code
@@ -39,7 +34,7 @@ const TransactionCart = () => {
                     <MDBTypography tag="h5" className="text-uppercase">
                         Total price
                     </MDBTypography>
-                    <MDBTypography tag="h5">€ 137.00</MDBTypography>
+                    <MDBTypography tag="h5">Rp. {numberWithCommas(total_trx)}</MDBTypography>
                 </div>
 
                 <Button variant='secondary'>Check Out</Button>
