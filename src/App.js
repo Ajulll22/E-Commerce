@@ -8,6 +8,9 @@ import AuthProvider from "./components/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
 import Detail from "./pages/Detail";
+import Register from "./pages/Register";
+import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/EditProduct";
 
 function App() {
 
@@ -21,11 +24,14 @@ function App() {
           <Route path="/shop/:id" element={<Detail />} />
           <Route path="/search" element={<Search />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/cart" element={
             <ProtectedRoute>
               <Cart />
             </ProtectedRoute>
           } />
+          <Route path="/shop/add" element={<AddProduct />} />
+          <Route path="/shop/edit/:id" element={<EditProduct />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
