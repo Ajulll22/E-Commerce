@@ -4,6 +4,9 @@ import { Button, Container } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../components/Header'
 import { API_URL } from '../utils/Api'
+import { numberWithCommas } from '../utils/CostFormat'
+import { BsCartPlus } from 'react-icons/bs'
+import ActionAdmin from '../components/ActionAdmin'
 
 const Detail = () => {
     const { id } = useParams()
@@ -12,7 +15,7 @@ const Detail = () => {
 
     useEffect(() => {
         getProduct()
-    })
+    }, [])
 
     const getProduct = async () => {
         try {
@@ -28,21 +31,26 @@ const Detail = () => {
             <Header />
             <hr />
             <Container>
-                <div className="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <h3 className="fw-bold lh-1 mb-3">{product.nama_product}</h3>
+                <hr />
+                <h5 style={{ color: "#53ADD1" }} >Rp. {product.harga_product && numberWithCommas(product.harga_product)}</h5>
+                <hr />
+                <div className="row flex-lg-row-reverse g-5 py-5">
                     <div className="col-10 col-sm-8 col-lg-6">
-                        <img src={product.url_product} className="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy" />
+                        <img src={product.url_product} className="d-block mx-lg-auto img-fluid img-thumbnail" alt="Bootstrap Themes" width="700" height="500" loading="lazy" />
                     </div>
                     <div className="col-lg-6">
-                        <h1 className="display-6 fw-bold lh-1 mb-3">{product.nama_product}</h1>
-                        <hr />
-                        <p>{product.deskripsi_product}</p>
+                        <div className='deskripsi' dangerouslySetInnerHTML={{ __html: product.deskripsi_product }}></div>
                         <hr />
                         <div className="d-grid gap-2 d-md-flex justify-content-md-start">
-                            <Button size='small' variant='secondary'>Add To Cart</Button>
+                            <Button size='small' variant='secondary'><BsCartPlus style={{ verticalAlign: "bottom" }} size={30} /> Add To Cart</Button>
                         </div>
                     </div>
                 </div>
+
             </Container>
+            <ActionAdmin id_product={id} />
+
         </>
     )
 }
