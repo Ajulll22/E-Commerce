@@ -1,17 +1,34 @@
+import axios from 'axios'
 import { MDBTypography } from 'mdb-react-ui-kit'
 import React, { useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { BsPencilSquare } from 'react-icons/bs'
+import { API_URL } from '../utils/Api'
 import AuthContext from './AuthContext'
 
-const Address = () => {
-    const { user } = useContext(AuthContext)
+const Address = ({ address, setAddress }) => {
+    const { user, getUserLogin } = useContext(AuthContext)
     const [edit, setEdit] = useState(false)
-    const [address, setAddress] = useState('')
 
     const Edit = () => {
         setEdit(true)
-        setAddress(`${user.alamat_user}`)
+        setAddress(user.alamat_user)
+    }
+
+    const onEditAlamat = async (e) => {
+        e.preventDefault();
+        try {
+            const data = {
+                alamat_user: address
+            }
+            await axios.put(API_URL + "auth/user", data, {
+                withCredentials: true
+            })
+            await getUserLogin()
+            setEdit(false)
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
     }
 
     return (
@@ -21,8 +38,8 @@ const Address = () => {
             </MDBTypography>
             {edit === false
                 ? <p>{user.alamat_user} <BsPencilSquare onClick={Edit} className='add-to-cart' /></p>
-                : <Form>
-                    <Form.Control as="textarea" value={address} onChange={(e) => setAddress(e.target.value)} rows={3} />
+                : <Form onSubmit={onEditAlamat}>
+                    <Form.Control as="textarea" value={address} onChange={(e) => setAddress(e.target.value)} rows={3} required />
                     <Button onClick={() => setEdit(false)} size="sm" className='my-3 me-2' variant="outline-secondary">
                         Cancel
                     </Button>
