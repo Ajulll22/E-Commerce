@@ -13,14 +13,14 @@ import {
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { API_URL } from '../utils/Api';
-import { useNavigate } from 'react-router-dom';
-import ErrorLogin from '../components/ErrorLogin';
+import { Link, useNavigate } from 'react-router-dom';
+import ErrorMessage from '../components/ErrorMessage';
 import AuthContext from '../components/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState('');
+    const [error, setError] = useState([]);
     const [show, setShow] = useState(true);
     let navigate = useNavigate();
     const { setAuth } = useContext(AuthContext)
@@ -38,7 +38,12 @@ const Login = () => {
             setAuth(true)
             navigate("/")
         } catch (error) {
-            setError(error.response.data.message)
+            const message = error.response.data.message
+            if (typeof message === "object") {
+                setError(error.response.data.message)
+            } else {
+                setError([error.response.data.message])
+            }
             setShow(true)
         }
 
@@ -64,8 +69,8 @@ const Login = () => {
 
                             <h5 className="fw-normal my-4 pb-3" style={{ letterSpacing: '1px' }}>Sign into your account</h5>
                             {
-                                error ?
-                                    <ErrorLogin error={error} show={show} setShow={setShow} />
+                                error.length ?
+                                    <ErrorMessage error={error} show={show} setShow={setShow} />
                                     : null
                             }
 
@@ -79,7 +84,7 @@ const Login = () => {
                             </Form>
 
 
-                            <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>Don't have an account? <a href="#!" style={{ color: '#393f81' }}>Register here</a></p>
+                            <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>Don't have an account? <Link className='link-nav' to={"/register"}>Register Here</Link></p>
 
                             <div className='d-flex flex-row justify-content-start'>
                                 <a href="#!" className="small text-muted me-1">Terms of use.</a>
