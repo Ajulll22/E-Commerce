@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Col from 'react-bootstrap/esm/Col'
 import Container from 'react-bootstrap/esm/Container'
 import Row from 'react-bootstrap/Row'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Header from '../components/Header'
 import ListCategory from '../components/ListCategory'
 import ListProduct from '../components/ListProduct'
@@ -60,7 +60,7 @@ const Shop = () => {
             <Container fluid>
                 <hr />
                 <div className='text-end'>
-                    {user.level_user === 2 && <Button variant='secondary'><AiOutlinePlusSquare style={{ "vertical-align": "bottom" }} size={30} /> Add Product</Button>}
+                    {user.level_user === 2 && <Link to={"/shop/add"}><Button variant='secondary'><AiOutlinePlusSquare style={{ verticalAlign: "bottom" }} size={30} /> Add Product</Button></Link>}
 
                 </div>
                 <hr />
