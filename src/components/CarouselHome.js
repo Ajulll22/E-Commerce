@@ -10,10 +10,7 @@ const CarouselHome = () => {
             <Carousel.Item>
                 <img className="d-block w-100" src={image} alt="First slide" />
                 <Carousel.Caption>
-                    <h3 className="text-dark">
-                        Belanja Alat Gaming dan <br /> Kebutuhan Komputer Lainnya
-                    </h3>
-                    <br />
+
 
                     <h4 className="link-home .text-dark">
                         <Link
