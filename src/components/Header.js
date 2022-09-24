@@ -57,7 +57,7 @@ function Header({ setKeyword }) {
                 :
                 <>
                   <Link className={'nav-link ' + (location.pathname === '/login' && 'disabled')} to={"/login"}><strong> Log In </strong></Link>
-                  <Link className={'nav-link ' + (location.pathname === '/shop' && 'disabled')} to={"/shop"}><strong> Register </strong></Link>
+                  <Link className={'nav-link ' + (location.pathname === '/register' && 'disabled')} to={"/register"}><strong> Register </strong></Link>
                 </>
               }
 
