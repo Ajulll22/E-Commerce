@@ -7,6 +7,7 @@ import { API_URL } from '../utils/Api'
 import { numberWithCommas } from '../utils/CostFormat'
 import { BsCartPlus } from 'react-icons/bs'
 import ActionAdmin from '../components/ActionAdmin'
+import swal from 'sweetalert'
 
 const Detail = () => {
     const { id } = useParams()
@@ -16,6 +17,24 @@ const Detail = () => {
     useEffect(() => {
         getProduct()
     }, [])
+
+    const addCart = async (id_product) => {
+        try {
+            await axios.post(API_URL + "cart", { id_product }, {
+                withCredentials: true
+            })
+            swal({
+                title: "Success",
+                text: "Berhasil Masuk Keranjang ",
+                icon: "success",
+                button: false,
+                timer: 1500,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 
     const getProduct = async () => {
         try {
@@ -43,7 +62,7 @@ const Detail = () => {
                         <div className='deskripsi' dangerouslySetInnerHTML={{ __html: product.deskripsi_product }}></div>
                         <hr />
                         <div className="d-grid gap-2 d-md-flex justify-content-md-start">
-                            <Button size='small' variant='secondary'><BsCartPlus style={{ verticalAlign: "bottom" }} size={30} /> Add To Cart</Button>
+                            <Button onClick={() => addCart(id)} size='small' variant='secondary'><BsCartPlus style={{ verticalAlign: "bottom" }} size={30} /> Add To Cart</Button>
                         </div>
                     </div>
                 </div>
