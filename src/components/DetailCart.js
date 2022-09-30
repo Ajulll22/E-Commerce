@@ -4,7 +4,7 @@ import { Image } from 'react-bootstrap'
 import ListCart from './ListCart'
 import no_data from '../images/not-found.svg'
 
-const DetailCart = ({ carts, getCart }) => {
+const DetailCart = ({ getTotalHarga, idCheck, setIdCheck, carts, getCart }) => {
     return (
         <MDBCol lg="8">
             <div className="p-5">
@@ -20,7 +20,7 @@ const DetailCart = ({ carts, getCart }) => {
                 <hr className="my-4" />
                 {carts.length ?
                     carts.map((cart) => (
-                        <ListCart key={cart.id_cart} getCart={getCart} cart={cart} />
+                        <ListCart key={cart.id_cart} getTotalHarga={getTotalHarga} idCheck={idCheck} setIdCheck={setIdCheck} getCart={getCart} cart={cart} />
                     ))
                     : <div className='text-center mt-3'>
                         <Image width={'50%'} height={'50%'} src={no_data} />
