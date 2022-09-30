@@ -1,13 +1,11 @@
 import axios from 'axios'
 import { MDBTypography } from 'mdb-react-ui-kit'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { BsPencilSquare } from 'react-icons/bs'
 import { API_URL } from '../utils/Api'
-import AuthContext from './AuthContext'
 
-const Address = ({ address, setAddress }) => {
-    const { user, getUserLogin } = useContext(AuthContext)
+const Address = ({ user, getUserLogin, address, setAddress }) => {
     const [edit, setEdit] = useState(false)
 
     const Edit = () => {
