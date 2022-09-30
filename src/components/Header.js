@@ -49,6 +49,8 @@ function Header({ setKeyword }) {
                   <Navbar.Text>
                     Signed in as:</Navbar.Text>
                   <NavDropdown align="end" title={user.nama_user} id="basic-nav-dropdown">
+                    <NavDropdown.Item >Profil</NavDropdown.Item>
+                    <NavDropdown.Item >Riwayat</NavDropdown.Item>
                     <NavDropdown.Item onClick={onLogout} >Log Out</NavDropdown.Item>
                   </NavDropdown>
 
