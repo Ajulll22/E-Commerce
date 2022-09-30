@@ -9,7 +9,7 @@ const ListCategory = ({ categories, onCategorySelect, categorySelect }) => {
             <hr />
             <ul className="list-group mb-3">
                 {categories && categories.map((category) => (
-                    <li onClick={() => onCategorySelect(category.id_category, category.nama_category)} key={category.id_category} className={"list-group-item mb-1 d-flex justify-content-between align-items-center list-category "}>
+                    <li onClick={() => onCategorySelect(category.id_category, category.nama_category)} key={category.id_category} className={"list-group-item mb-1 d-flex justify-content-between align-items-center list-category " + (parseInt(categorySelect) === category.id_category && "select")}>
                         <h4>{category.nama_category}</h4>
                         <FiArrowUpRight size={35} className={"rotate " + (parseInt(categorySelect) === category.id_category && "category-select")} />
                     </li>
