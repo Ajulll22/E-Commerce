@@ -140,7 +140,7 @@ const EditProduct = () => {
                             <Editor deskripsi={deskripsi} setDeskripsi={setDeskripsi} />
                         </Form.Group>
                         <div className='mt-5 text-end'>
-                            <Button type='submit' variant='secondary'>Save</Button>
+                            <Button type='submit' variant='secondary'>Update</Button>
                         </div>
 
                     </Form>
