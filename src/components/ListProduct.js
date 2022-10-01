@@ -3,13 +3,14 @@ import React from 'react'
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/esm/Col'
 import { FiPlusCircle } from 'react-icons/fi'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import { API_URL } from '../utils/Api';
 import { numberWithCommas } from '../utils/CostFormat';
 
 
 const ListProduct = ({ product }) => {
+    const navigate = useNavigate();
 
     const addCart = async (id_product) => {
         try {
@@ -24,7 +25,7 @@ const ListProduct = ({ product }) => {
                 timer: 1500,
             });
         } catch (error) {
-            console.log(error);
+            navigate("/login")
         }
 
     }
