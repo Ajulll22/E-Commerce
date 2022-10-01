@@ -7,6 +7,7 @@ const Home = () => {
     return (
         <div>
             <Header />
+            <hr />
             <CarouselHome />
         </div>
     );
