@@ -9,7 +9,8 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useContext, useState } from 'react';
 import AuthContext from './AuthContext';
-import { NavDropdown } from 'react-bootstrap';
+import { Image, NavDropdown } from 'react-bootstrap';
+import logo from '../images/logo.png'
 
 
 function Header({ setKeyword }) {
@@ -50,7 +51,7 @@ function Header({ setKeyword }) {
                     Signed in as:</Navbar.Text>
                   <NavDropdown align="end" title={user.nama_user} id="basic-nav-dropdown">
                     <NavDropdown.Item >Profil</NavDropdown.Item>
-                    <NavDropdown.Item >Riwayat</NavDropdown.Item>
+                    <NavDropdown.Item className={location.pathname === '/riwayat' && 'active'} as={Link} to={"/riwayat"} >Riwayat</NavDropdown.Item>
                     <NavDropdown.Item onClick={onLogout} >Log Out</NavDropdown.Item>
                   </NavDropdown>
 
@@ -72,6 +73,9 @@ function Header({ setKeyword }) {
       <Navbar variant='light' expand="lg">
         <Container fluid>
           <Col>
+            <div className='text-center'>
+              <Image fluid style={{ height: "55px" }} src={logo} />
+            </div>
           </Col>
           <Col md="8">
             <Form onSubmit={onSearch} className="d-flex">
