@@ -10,6 +10,7 @@ import ListProduct from '../components/ListProduct'
 import { API_URL } from '../utils/Api'
 import Image from 'react-bootstrap/Image'
 import no_data from '../images/not-found.svg'
+import Paginate from '../components/Paginate'
 
 
 const Search = () => {
@@ -21,7 +22,6 @@ const Search = () => {
     const [categories, setCategories] = useState([]);
     const [categoryQuery, setCategoryQuery] = useSearchParams();
     const [categorySelect, setCategorySelect] = useState(categoryQuery.get('id_category') || '')
-    const [namaCategory, setNamaCategory] = useState('')
 
     const [query] = useSearchParams();
     const [keyword, setKeyword] = useState(query.get('keyword') || '')
@@ -33,20 +33,38 @@ const Search = () => {
 
     useEffect(() => {
         getProducts()
-    }, [categorySelect, keyword])
+    }, [categorySelect, keyword, page])
 
-    var queryList = { keyword }
+    const changePage = ({ selected }) => {
+        setPage(selected)
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        categoryQuery.set("page", selected)
+        setCategoryQuery(categoryQuery)
+    }
 
-
-    const onCategorySelect = (id_category, nama_category) => {
-        setCategorySelect(id_category)
-        setNamaCategory(nama_category)
-        queryList.id_category = id_category
-        setCategoryQuery(queryList)
+    const onCategorySelect = (id_category) => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        if (id_category === categorySelect) {
+            setCategorySelect('')
+            categoryQuery.delete("id_category")
+            setCategoryQuery(categoryQuery)
+        } else {
+            setCategorySelect(id_category)
+            categoryQuery.delete("page")
+            categoryQuery.set("id_category", id_category)
+            setCategoryQuery(categoryQuery)
+        }
+        setPage(0)
     }
 
     const getProducts = async () => {
-        const response = await axios.get(API_URL + "products?id_category=" + categorySelect + "&search=" + keyword)
+        const response = await axios.get(API_URL + "products?id_category=" + categorySelect + "&search=" + keyword + "&page=" + page)
         setProducts(response.data.result)
         setPage(response.data.page);
         setPages(response.data.totalPage);
@@ -73,9 +91,12 @@ const Search = () => {
                     <Col className='mx-2 my-auto'>
                         <Row className='overflow-auto'>
                             {products.length ?
-                                products && products.map((product) => (
-                                    <ListProduct key={product.id_product} product={product} />
-                                ))
+                                <>
+                                    <Paginate pages={pages} changePage={changePage} />
+                                    {products && products.map((product) => (
+                                        <ListProduct key={product.id_product} product={product} />
+                                    ))}
+                                </>
                                 : <div className='text-center mt-3'>
                                     <Image width={'50%'} height={'50%'} src={no_data} />
                                     <h2>Data Not Found</h2>
