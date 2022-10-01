@@ -11,6 +11,8 @@ import Detail from "./pages/Detail";
 import Register from "./pages/Register";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import Success from "./pages/Success";
+import Riwayat from "./pages/Riwayat";
 
 function App() {
 
@@ -32,6 +34,8 @@ function App() {
           } />
           <Route path="/shop/add" element={<AddProduct />} />
           <Route path="/shop/edit/:id" element={<EditProduct />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/riwayat" element={<Riwayat />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
